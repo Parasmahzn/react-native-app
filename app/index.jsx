@@ -1,4 +1,4 @@
-import { Image, ScrollView, Text, View } from 'react-native';
+import { Image, ScrollView, Text, View, TouchableOpacity } from 'react-native';
 import { Redirect, router } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -9,6 +9,11 @@ import { useGlobalContext } from '../context/GlobalProvider';
 export default function App() {
     // const { isLoading, isLoggedIn } = useGlobalContext();
     // if (!isLoading && isLoggedIn) return <Redirect href={"/home"} />
+
+    // const openLinkedInProfile = () => {
+    //     const url = 'https://www.linkedin.com/in/paras-maharjan-7b910583/';
+    //     Linking.openURL(url).catch((err) => console.error('Failed to open URL:', err));
+    // };
 
     return (
         <SafeAreaView className='bg-primary h-full'>
@@ -27,8 +32,7 @@ export default function App() {
                     <View className='relative mt-5'>
                         <Text className='text-3xl text-white text-center font-bold'>
                             Discover Endless Possibilities with{' '}
-                            <Text className='text-secondary-200'>Aora</Text>
-
+                            <Text className='text-secondary-200'>Paras</Text>
                         </Text>
                         <Image
                             source={images.path}
@@ -37,7 +41,10 @@ export default function App() {
                         />
                     </View>
                     <Text className='text-sm font-pregular text-gray-100 mt-7 text-center'>
-                        Where creativity meets innovation: embark on a journey of limiless exploration with Aora
+                        Deerhold DRM App — Your Solution for Mobile Attendance
+                    </Text>
+                    <Text className='text-base text-gray-300'>
+                        © {new Date().getFullYear()} Paras. All rights reserved.
                     </Text>
                     <CustomButton
                         title={"Continue with Email"}

@@ -1,6 +1,6 @@
 import { View, Text } from 'react-native';
 
-const WorkFromHomeCard = ({ serialNumber, leave: { userName, designation, fromDate, toDate, reason, noOfDays } }) => {
+const WorkFromHomeCard = ({ serialNumber, leave: { userName, designation, fromDate, toDate, reason, noOfDays, shift } }) => {
 
     return (
         <View className='flex-col items-center px-4 mb-14'>
@@ -20,7 +20,7 @@ const WorkFromHomeCard = ({ serialNumber, leave: { userName, designation, fromDa
                             {designation}
                         </Text>
                         <Text className='text-gray-400 text-sm'>
-                           Reason: {reason}
+                            Reason: {reason}
                         </Text>
                         <Text className='text-gray-400 text-sm'>
                             From: {new Date(fromDate).toLocaleDateString()}
@@ -29,7 +29,7 @@ const WorkFromHomeCard = ({ serialNumber, leave: { userName, designation, fromDa
                             To: {new Date(toDate).toLocaleDateString()}
                         </Text>
                         <Text className='text-gray-400 text-sm'>
-                            Total Days : {noOfDays}
+                            Total Days : {noOfDays} {shift}
                         </Text>
                     </View>
                 </View>

@@ -1,42 +1,58 @@
-import { View, Text, FlatList, Image, RefreshControl, ActivityIndicator } from 'react-native'
+import { View, Text, FlatList, Image, RefreshControl } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { images } from '../../constants';
 import EmptyState from '../../components/EmptyState';
 import LeaveCard from '../../components/LeaveCard';
 import { useUsers } from '../../api/users';
 import CustomButton from '../../components/CustomButton';
 import Loader from '../../components/Loader';
+import { useLeaveStatus } from '../../api/leave-status';
 
 const Home = () => {
-    const { data, isLoading, isError, error, refetch } = useUsers();
+    const user = useUsers();
+    const leaveStatus = useLeaveStatus();
 
     const [refreshing, setRefreshing] = useState(false);
+    const [currentTime, setCurrentTime] = useState(new Date());
 
     const onRefresh = async () => {
         setRefreshing(true);
-        await refetch();
+        await user.refetch();
+        await leaveStatus.refetch();
         setRefreshing(false);
     }
 
-    if (isLoading) {
-        <Loader />
-    }
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setCurrentTime(new Date());
+        }, 1000);
 
-    if (isError)
-        return <p>{`Error : ${error.message}`}</p>
+        return () => clearInterval(timer);
+    }, []);
 
-    // Add a check here to avoid destructuring undefined
-    if (!data || !data.userInfo) {
-        return null;
-    }
+    if (user.isLoading || leaveStatus.isLoading) return <Loader />
+    if (user.isError || leaveStatus.isError) return <h1> Something Went Wrong...</h1>
 
-    const { userInfo, leaveType } = data;
+    const { userInfo } = user.data;
+
+    const formatTime = (date) => {
+        return date.toLocaleString('en-US', {
+            weekday: 'long', // Full name of the day (e.g., "Sunday")
+            hour: '2-digit', // 2-digit hour (12-hour format)
+            minute: '2-digit', // 2-digit minute
+            second: '2-digit', // 2-digit second
+            hour12: true // 12-hour format with AM/PM
+        });
+    };
+
+    const formatDate = (date) => {
+        return date.toLocaleDateString();
+    };
 
     return (
         <SafeAreaView className='bg-primary  h-full'>
             <FlatList
-                data={leaveType}
+                data={leaveStatus.data[0]}
                 keyExtractor={(item) => item.id}
                 renderItem={({ item }) => (
                     <LeaveCard leave={item} />
@@ -53,11 +69,14 @@ const Home = () => {
                                 </Text>
                             </View>
                             <View className='mt-1.5'>
-                                <Image
+                                {/* <Image
                                     source={images.logoSmall}
                                     resizeMode='contain'
                                     className='w-9 h-10'
-                                />
+                                /> */}
+
+                                <Text className='text-white text-xl font-psemibold'>{formatDate(currentTime)}</Text>
+                                <Text className='text-white text-lg font-psemibold'>{formatTime(currentTime)}</Text>
                             </View>
                         </View>
 
@@ -74,6 +93,14 @@ const Home = () => {
                                 containerStyles='flex-1 mx-3'
                                 isLoading={!userInfo.isPunchedIn}
                             />
+                        </View>
+                        <View className='p-4 bg-gray-800 rounded-lg'>
+                            <Text className='text-lg font-psemibold text-white mb-4 text-center'>Leave Balance</Text>
+                            <View className='w-full flex-row justify-evenly gap-1'>
+                                <Text className='text-center font-pmedium text-gray-100'>Total: {userInfo.totalLeaves}</Text>
+                                <Text className='text-center font-pmedium text-gray-100'>Taken: {userInfo.leavesTaken}</Text>
+                                <Text className='text-center font-pmedium text-gray-100'>Remaining: {userInfo.remainingLeaves}</Text>
+                            </View>
                         </View>
                     </View>
                 )}

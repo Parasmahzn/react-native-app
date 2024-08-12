@@ -17,6 +17,14 @@ const SignIn = () => {
 
     const { mutateAsync: login, isLoading, error, isError, isSuccess } = useLogin();
 
+    if (isLoading) {
+        return (
+            <View className='flex-1 justify-center items-center' >
+                <ActivityIndicator size="large" color="#0000ff" />
+            </View>
+        );
+    }
+
     const [form, setForm] = useState({
         email: '',
         password: ''
@@ -69,14 +77,6 @@ const SignIn = () => {
         } finally {
             setIsSubmitting(false);
         }
-    }
-
-    if (isLoading) {
-        return (
-            <View className='flex-1 justify-center items-center' >
-                <ActivityIndicator size="large" color="#0000ff" />
-            </View>
-        );
     }
 
     return (

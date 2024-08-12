@@ -13,18 +13,16 @@ export const useUsers = () => {
         queryKey: ['users'],
         queryFn: getUserDetail,
         select: (data) => {
-            const leaveType = data?.user?.leaveData?.leaveTypeData || [];
-            const designation = data?.user?.Designation || {};
             const userInfo = {
                 fullName: data?.user?.fullName || '',
                 email: data?.user?.email || '',
                 isPunchedIn: data?.user?.punchedIn === 1,
-                designation: designation.name || '',
+                designation: data?.user?.Designation?.name || '',
                 totalLeaves: data?.user?.leaveData?.totalLeaves || 0,
                 leavesTaken: data?.user?.leaveData?.leavesTaken || 0,
                 remainingLeaves: data?.user?.leaveData?.remainingLeaves || 0
             };
-            return { leaveType, designation, userInfo };
+            return { userInfo };
         }
     })
 };

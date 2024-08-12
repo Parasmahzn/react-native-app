@@ -12,10 +12,6 @@ const OnWorkFromHome = () => {
     const wfhUsers = useWorkFromHome();
     const allUsers = useAllUsers();
 
-    const wfhList = wfhUsers?.data[0];
-    const totalWfhCount = wfhUsers?.data[1];
-    const totalEmployeeCount = allUsers?.data?.total_data || 0;
-
     if (wfhUsers.isLoading) {
         return <Loader />
     }
@@ -28,8 +24,15 @@ const OnWorkFromHome = () => {
         );
     }
 
+    const wfhList = wfhUsers.data[0];
+    const totalWfhCount = wfhUsers.data[1];
+    const totalEmployeeCount = allUsers.data.total_data || 0;
+
     return (
         <SafeAreaView className='bg-primary  h-full'>
+            <Text className='text-2xl text-white text-center font-psemibold px-4 my-4'>
+                Employees on WFH
+            </Text>
             <FlatList
                 data={wfhList}
                 keyExtractor={(item) => item.id}
