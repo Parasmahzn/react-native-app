@@ -9,10 +9,10 @@ const LeaveCard = ({ leave: { leaveName, allowedDays, remainingDays } }) => {
                     <Text className="text-white font-psemibold text-lg">
                         {leaveName}
                     </Text>
-                    <Text className="text-white font-psemibold text-lg">
+                    <Text className="text-white font-psemibold text-sm">
                         Total Days: {allowedDays}
                     </Text>
-                    <Text className="text-white font-psemibold text-lg">
+                    <Text className="text-white font-psemibold text-sm">
                         Days Taken: {daysTaken}
                     </Text>
                 </View>

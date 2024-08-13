@@ -7,22 +7,14 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import InfoBox from '../../components/InfoBox';
 import EmptyState from '../../components/EmptyState';
 import { useAllUsers } from '../../api/users';
+import ErrorState from '../../components/ErrorState';
 
 const OnLeave = () => {
     const onLeaveUsers = useOnLeave();
     const allUsers = useAllUsers();
 
-    if (onLeaveUsers.isLoading || allUsers.isLoading) {
-        return <Loader />
-    }
-
-    if (onLeaveUsers.isError) {
-        return (
-            <View className="flex-1 justify-center items-center">
-                <Text className="text-white">Error: {onLeaveUsers?.error?.message}</Text>
-            </View>
-        );
-    }
+    if (onLeaveUsers.isLoading || allUsers.isLoading) return <Loader />
+    if (onLeaveUsers.isError) return <ErrorState message={onLeaveUsers.error.message} />
 
     const onLeaveList = onLeaveUsers.data[0];
     const totalOnLeaveCount = onLeaveUsers.data[1] || 0;
@@ -32,8 +24,10 @@ const OnLeave = () => {
 
     const onRefresh = async () => {
         setRefreshing(true);
-        await onLeaveUsers.refetch();
-        await allUsers.refetch();
+        await Promise.all([
+            onLeaveUsers.refetch(),
+            allUsers.refetch()
+        ]);
         setRefreshing(false);
     }
 

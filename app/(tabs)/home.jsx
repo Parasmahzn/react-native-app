@@ -7,6 +7,7 @@ import { useUsers } from '../../api/users';
 import CustomButton from '../../components/CustomButton';
 import Loader from '../../components/Loader';
 import { useLeaveStatus } from '../../api/leave-status';
+import { getDateTimeInfo } from '../../lib/utils';
 
 const Home = () => {
     const user = useUsers();
@@ -34,21 +35,7 @@ const Home = () => {
     if (user.isError || leaveStatus.isError) return <h1> Something Went Wrong...</h1>
 
     const { userInfo } = user.data;
-
-    const formatTime = (date) => {
-        return date.toLocaleString('en-US', {
-            weekday: 'long', // Full name of the day (e.g., "Sunday")
-            hour: '2-digit', // 2-digit hour (12-hour format)
-            minute: '2-digit', // 2-digit minute
-            second: '2-digit', // 2-digit second
-            hour12: true // 12-hour format with AM/PM
-        });
-    };
-
-    const formatDate = (date) => {
-        return date.toLocaleDateString();
-    };
-
+    const { dayName, time12Hour } = getDateTimeInfo(currentTime);
     return (
         <SafeAreaView className='bg-primary  h-full'>
             <FlatList
@@ -58,6 +45,7 @@ const Home = () => {
                     <LeaveCard leave={item} />
                 )}
                 ListHeaderComponent={() => (
+
                     <View className='my-6 px-4 space-y-6'>
                         <View className='justify-between items-start flex-row mb-6'>
                             <View>
@@ -68,15 +56,14 @@ const Home = () => {
                                     {userInfo?.fullName}
                                 </Text>
                             </View>
-                            <View className='mt-1.5'>
-                                {/* <Image
-                                    source={images.logoSmall}
-                                    resizeMode='contain'
-                                    className='w-9 h-10'
-                                /> */}
 
-                                <Text className='text-white text-xl font-psemibold'>{formatDate(currentTime)}</Text>
-                                <Text className='text-white text-lg font-psemibold'>{formatTime(currentTime)}</Text>
+                            <View className='my-1'>
+                                <Text className='text-white text-center w-24 text-sm font-psemibold'>
+                                    {dayName}
+                                </Text>
+                                <Text className='text-white text-center w-24 text-sm font-psemibold'>
+                                    {time12Hour}
+                                </Text>
                             </View>
                         </View>
 

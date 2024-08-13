@@ -1,28 +1,21 @@
-import { View, Text, FlatList, TouchableOpacity, Image } from 'react-native'
 import React from 'react'
+import { View, Text, FlatList } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { useAllUsers } from '../../api/users';
 import { useWorkFromHome } from '../../api/on-wfh'
+
 import Loader from '../../components/Loader';
 import InfoBox from '../../components/InfoBox';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import ErrorState from '../../components/ErrorState';
 import EmptyState from '../../components/EmptyState';
 import WorkFromHomeCard from '../../components/WfhCard';
-import { useAllUsers } from '../../api/users';
 
 const OnWorkFromHome = () => {
     const wfhUsers = useWorkFromHome();
     const allUsers = useAllUsers();
 
-    if (wfhUsers.isLoading) {
-        return <Loader />
-    }
-
-    if (wfhUsers.isError) {
-        return (
-            <View className="flex-1 justify-center items-center">
-                <Text className="text-white">Error: {wfhUsers.error.message}</Text>
-            </View>
-        );
-    }
+    if (wfhUsers.isLoading) return <Loader />
+    if (wfhUsers.isError) return <ErrorState message={wfhUsers.error.message} />
 
     const wfhList = wfhUsers.data[0];
     const totalWfhCount = wfhUsers.data[1];

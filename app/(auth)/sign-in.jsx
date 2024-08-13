@@ -1,29 +1,28 @@
 import { useEffect, useState } from 'react';
-import * as SecureStore from 'expo-secure-store';
-import { View, Text, ScrollView, Image, Alert, ActivityIndicator, Switch } from 'react-native'
+import { View, Text, ScrollView, Image, Alert, Switch } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { images } from '../../constants';
-import FormField from '../../components/FormField';
-import CustomButton from '../../components/CustomButton';
+import * as SecureStore from 'expo-secure-store';
+
 import { Link, router } from 'expo-router';
 import { useLogin } from '../../api/login';
+import { useGlobalContext } from '../../context/GlobalProvider';
+
 import { validatePassword } from '../../lib/validations';
 import { getCurrentUser } from '../../lib/utils';
+import { images } from '../../constants';
 
-import { useGlobalContext } from '../../context/GlobalProvider';
+import FormField from '../../components/FormField';
+import CustomButton from '../../components/CustomButton';
+import ErrorState from '../../components/ErrorState';
+import Loader from '../../components/Loader';
 
 const SignIn = () => {
     const { setUser, setIsLoggedIn } = useGlobalContext();
 
-    const { mutateAsync: login, isLoading, error, isError, isSuccess } = useLogin();
+    const { mutateAsync: login, isLoading, error, isError } = useLogin();
 
-    if (isLoading) {
-        return (
-            <View className='flex-1 justify-center items-center' >
-                <ActivityIndicator size="large" color="#0000ff" />
-            </View>
-        );
-    }
+    if (isLoading) return <Loader />;
+    if (isError) return <ErrorState message={error.message} />;
 
     const [form, setForm] = useState({
         email: '',
