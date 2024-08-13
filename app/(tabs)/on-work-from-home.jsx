@@ -1,8 +1,9 @@
-import React from 'react'
-import { View, Text, FlatList } from 'react-native'
+import { View, Text, FlatList, RefreshControl } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAllUsers } from '../../api/users';
 import { useWorkFromHome } from '../../api/on-wfh'
+
+import useRefresh from '../../hooks/useRefresh';
 
 import Loader from '../../components/Loader';
 import InfoBox from '../../components/InfoBox';
@@ -14,12 +15,19 @@ const OnWorkFromHome = () => {
     const wfhUsers = useWorkFromHome();
     const allUsers = useAllUsers();
 
-    if (wfhUsers.isLoading) return <Loader />
-    if (wfhUsers.isError) return <ErrorState message={wfhUsers.error.message} />
+    const { refreshing, onRefresh } = useRefresh([
+        wfhUsers.refetch,
+        allUsers.refetch,
+    ]);
 
-    const wfhList = wfhUsers.data[0];
-    const totalWfhCount = wfhUsers.data[1];
-    const totalEmployeeCount = allUsers.data.total_data || 0;
+    if (wfhUsers.isLoading || allUsers.isLoading)
+        return <Loader />
+    if (wfhUsers.isError || allUsers.isError)
+        return <ErrorState message={wfhUsers.error.message || allUsers.error.message} />
+
+    const wfhList = wfhUsers?.data[0] || [];
+    const totalWfhCount = wfhUsers?.data[1] || 0;
+    const totalEmployeeCount = allUsers?.data?.total_data || 0;
 
     return (
         <SafeAreaView className='bg-primary  h-full'>
@@ -59,6 +67,11 @@ const OnWorkFromHome = () => {
 
                     />
                 )}
+                refreshControl={
+                    <RefreshControl
+                        refreshing={refreshing}
+                        onRefresh={onRefresh}
+                    />}
             />
         </SafeAreaView>
     )

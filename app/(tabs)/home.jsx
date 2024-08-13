@@ -1,27 +1,28 @@
-import { View, Text, FlatList, Image, RefreshControl } from 'react-native'
 import React, { useEffect, useState } from 'react'
+import { View, Text, FlatList, RefreshControl } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context';
-import EmptyState from '../../components/EmptyState';
-import LeaveCard from '../../components/LeaveCard';
+import { getDateTimeInfo } from '../../lib/utils';
 import { useUsers } from '../../api/users';
+import { useLeaveStatus } from '../../api/leave-status';
+
+import useRefresh from '../../hooks/useRefresh';
+
+import LeaveCard from '../../components/LeaveCard';
+import EmptyState from '../../components/EmptyState';
 import CustomButton from '../../components/CustomButton';
 import Loader from '../../components/Loader';
-import { useLeaveStatus } from '../../api/leave-status';
-import { getDateTimeInfo } from '../../lib/utils';
+import ErrorState from '../../components/ErrorState';
 
 const Home = () => {
     const user = useUsers();
     const leaveStatus = useLeaveStatus();
 
-    const [refreshing, setRefreshing] = useState(false);
-    const [currentTime, setCurrentTime] = useState(new Date());
+    const { refreshing, onRefresh } = useRefresh([
+        user.refetch,
+        leaveStatus.refetch,
+    ]);
 
-    const onRefresh = async () => {
-        setRefreshing(true);
-        await user.refetch();
-        await leaveStatus.refetch();
-        setRefreshing(false);
-    }
+    const [currentTime, setCurrentTime] = useState(new Date());
 
     useEffect(() => {
         const timer = setInterval(() => {
@@ -31,8 +32,10 @@ const Home = () => {
         return () => clearInterval(timer);
     }, []);
 
-    if (user.isLoading || leaveStatus.isLoading) return <Loader />
-    if (user.isError || leaveStatus.isError) return <h1> Something Went Wrong...</h1>
+    if (user.isLoading || leaveStatus.isLoading)
+        return <Loader />
+    if (user.isError || leaveStatus.isError)
+        return <ErrorState message={user.error.message || leaveStatus.error.message} />
 
     const { userInfo } = user.data;
     const { dayName, time12Hour } = getDateTimeInfo(currentTime);

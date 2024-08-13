@@ -17,11 +17,13 @@ const Profile = () => {
         // await signOut();
         setUser(null);
         setIsLoggedIn(false);
-        router.replace('/sign-in');
+        router.replace('/forgot-password');
     }
 
-    if (users.isLoading) return <Loader />;
-    if (users.isError) return <ErrorState message={users.error.message} />;
+    if (users.isLoading)
+        return <Loader />;
+    if (users.isError)
+        return <ErrorState message={users.error.message} />;
 
     const { userInfo: { designation, fullName } } = users.data;
 

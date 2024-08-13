@@ -1,35 +1,34 @@
 import { View, FlatList, Text, RefreshControl } from 'react-native'
-import React, { useState } from 'react'
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useOnLeave } from '../../api/on-leave';
+import { useAllUsers } from '../../api/users';
+import useRefresh from '../../hooks/useRefresh';
+
 import Loader from '../../components/Loader';
 import WorkFromHomeCard from '../../components/WfhCard';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import InfoBox from '../../components/InfoBox';
 import EmptyState from '../../components/EmptyState';
-import { useAllUsers } from '../../api/users';
 import ErrorState from '../../components/ErrorState';
 
 const OnLeave = () => {
     const onLeaveUsers = useOnLeave();
     const allUsers = useAllUsers();
 
-    if (onLeaveUsers.isLoading || allUsers.isLoading) return <Loader />
-    if (onLeaveUsers.isError) return <ErrorState message={onLeaveUsers.error.message} />
+    const { refreshing, onRefresh } = useRefresh([
+        onLeaveUsers.refetch,
+        allUsers.refetch,
+    ]);
 
-    const onLeaveList = onLeaveUsers.data[0];
-    const totalOnLeaveCount = onLeaveUsers.data[1] || 0;
-    const totalEmployeeCount = allUsers.data.total_data || 0;
+    if (onLeaveUsers.isLoading || allUsers.isLoading)
+        return <Loader />
+    if (onLeaveUsers.isError || allUsers.isError)
+        return <ErrorState message={onLeaveUsers.error.message || allUsers.error.message} />
 
-    const [refreshing, setRefreshing] = useState(false);
+    const { data: onLeaveUserData } = onLeaveUsers;
 
-    const onRefresh = async () => {
-        setRefreshing(true);
-        await Promise.all([
-            onLeaveUsers.refetch(),
-            allUsers.refetch()
-        ]);
-        setRefreshing(false);
-    }
+    const onLeaveList = onLeaveUserData[0] || [];
+    const totalOnLeaveCount = onLeaveUserData[1] || 0;
+    const totalEmployeeCount = allUsers?.data?.total_data || 0;
 
     return (
         <SafeAreaView className='bg-primary  h-full'>
