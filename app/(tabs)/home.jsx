@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, FlatList, RefreshControl } from 'react-native'
+import { View, Text, FlatList, RefreshControl, Alert } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { getDateTimeInfo } from '../../lib/utils';
+import { delay, getDateTimeInfo } from '../../lib/utils';
 import { useUsers } from '../../api/users';
 import { useLeaveStatus } from '../../api/leave-status';
 
@@ -12,10 +12,12 @@ import EmptyState from '../../components/EmptyState';
 import CustomButton from '../../components/CustomButton';
 import Loader from '../../components/Loader';
 import ErrorState from '../../components/ErrorState';
+import { usePunchIn } from '../../api/punch-in';
 
 const Home = () => {
     const user = useUsers();
     const leaveStatus = useLeaveStatus();
+    const punchIn = usePunchIn();
 
     const { refreshing, onRefresh } = useRefresh([
         user.refetch,
@@ -23,6 +25,7 @@ const Home = () => {
     ]);
 
     const [currentTime, setCurrentTime] = useState(new Date());
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     useEffect(() => {
         const timer = setInterval(() => {
@@ -39,6 +42,29 @@ const Home = () => {
 
     const { userInfo } = user.data;
     const { dayName, time12Hour } = getDateTimeInfo(currentTime);
+
+    const handlePunchIn = async () => {
+        setIsSubmitting(true);
+        try {
+            await delay(2000);
+            // const punchInResp = await punchIn.mutateAsync();
+            // if (punchInResp.success) {
+            //     Alert.alert("Success", 'Punch In Successful');
+            // } else if (response.message) {
+            //     Alert.alert("Notice", response.message);
+            // } else {
+            //     Alert.alert("Error", 'Punch In failed, please try again.');
+            // }
+            Alert.alert("Success", 'Punch In Confirmed! Have a Great Day');
+        } catch (error) {
+            Alert.alert("Error", error.message);
+        }
+        finally {
+            setIsSubmitting(false);
+        }
+    }
+    const handlePunchOut = async () => { }
+
     return (
         <SafeAreaView className='bg-primary  h-full'>
             <FlatList
@@ -73,15 +99,15 @@ const Home = () => {
                         <View className='w-full flex-row justify-between pt-0 pb-1'>
                             <CustomButton
                                 title='Punch In'
-                                // handlePress={submit}
+                                handlePress={handlePunchIn}
                                 containerStyles='flex-1 mx-3'
-                                isLoading={userInfo.isPunchedIn}
+                                isLoading={isSubmitting}
                             />
                             <CustomButton
                                 title='Punch Out'
-                                // handlePress={submit}
+                                handlePress={handlePunchOut}
                                 containerStyles='flex-1 mx-3'
-                                isLoading={!userInfo.isPunchedIn}
+                                isLoading={!userInfo.isPunchedIn || isSubmitting}
                             />
                         </View>
                         <View className='p-4 bg-gray-800 rounded-lg'>
