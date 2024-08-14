@@ -1,5 +1,4 @@
 import avatar from "../assets/icons/avatar.png";
-import bookmark from "../assets/icons/bookmark.png";
 import home from "../assets/icons/home.png";
 import plus from "../assets/icons/plus.png";
 import profile from "../assets/icons/profile.png";
@@ -12,11 +11,12 @@ import logout from "../assets/icons/logout.png";
 import eyeHide from "../assets/icons/eye-hide.png";
 import eye from "../assets/icons/eye.png";
 import play from "../assets/icons/play.png";
+import wfh from "../assets/icons/wfh.png";
+import onLeave from "../assets/icons/on-leave.png";
 
 export default {
     avatar,
     play,
-    bookmark,
     home,
     plus,
     profile,
@@ -28,4 +28,6 @@ export default {
     logout,
     eyeHide,
     eye,
+    wfh,
+    onLeave
 };

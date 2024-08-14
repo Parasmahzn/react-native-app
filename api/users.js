@@ -16,11 +16,20 @@ export const useUsers = () => {
             const userInfo = {
                 fullName: data?.user?.fullName || '',
                 email: data?.user?.email || '',
+                citNumber: data?.user?.citNumber || '',
+                ssfNumber: data?.user?.ssf || '',
+                citizenshipNumber: data?.user?.citizenshipNumber || '',
+                joinedDate: data?.user?.joinDate || '',
                 isPunchedIn: data?.user?.punchedIn === 1,
                 designation: data?.user?.Designation?.name || '',
+                role: data?.user?.Role?.name || '',
                 totalLeaves: data?.user?.leaveData?.totalLeaves || 0,
                 leavesTaken: data?.user?.leaveData?.leavesTaken || 0,
-                remainingLeaves: data?.user?.leaveData?.remainingLeaves || 0
+                remainingLeaves: data?.user?.leaveData?.remainingLeaves || 0,
+                reportingManager: data?.user?.managerData?.fullName || '',
+                department: data?.user?.Department?.description || '',
+                shift: data?.user?.shiftData?.name || '',
+
             };
             return { userInfo };
         }

@@ -42,8 +42,8 @@ const OnWorkFromHome = () => {
                         serialNumber={index + 1} />
                 )}
                 ListHeaderComponent={() => (
-                    <View className='w-full justify-center items-center mt-6 mb-12 px-4'>
-                        <View className='mt-5 flex-row'>
+                    <View className='w-full justify-center items-center mt-6 mb-8 px-4'>
+                        <View className='mt-2 flex-row'>
                             <InfoBox
                                 title={totalWfhCount}
                                 subtitle="WFH"

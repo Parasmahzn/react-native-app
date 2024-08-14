@@ -49,6 +49,7 @@ const SignIn = () => {
             Alert.alert("Error", 'Please fill in all the fields');
             return;
         }
+
         const { valid, message } = validatePassword(form.password);
         if (!valid) {
             Alert.alert("Password Error", message);
@@ -71,8 +72,7 @@ const SignIn = () => {
             setIsLoggedIn(true);
             router.replace('/home');
         } catch (error) {
-            Alert.alert("Error", error.message);
-            return;
+            Alert.alert("Login Error", error.message || 'Invalid email or password. Please try again.');
         } finally {
             setIsSubmitting(false);
         }
@@ -91,13 +91,11 @@ const SignIn = () => {
                         Log in to DRM
                     </Text>
                     <FormField
-
                         title='Email'
                         value={form.email}
                         handleChangeText={(e) => setForm({ ...form, email: e })}
                         otherStyles='mt-7'
                         keyboardType='email-address'
-
                     />
                     <FormField
                         title='Password'

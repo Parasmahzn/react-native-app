@@ -51,26 +51,26 @@ const TabsLayout = () => {
                 }} />
 
                 <Tabs.Screen name='on-leave' options={{
-                    title: 'On Leave',
+                    title: 'Leave',
                     headerShown: false,
                     tabBarIcon: ({ color, focused }) => (
                         <TabIcon
-                            icon={icons.bookmark}
+                            icon={icons.onLeave}
                             color={color}
-                            name="On Leave"
+                            name="Leave"
                             focused={focused}
                         />
                     )
                 }} />
 
                 <Tabs.Screen name='on-work-from-home' options={{
-                    title: 'On WFH',
+                    title: 'WFH',
                     headerShown: false,
                     tabBarIcon: ({ color, focused }) => (
                         <TabIcon
-                            icon={icons.plus}
+                            icon={icons.wfh}
                             color={color}
-                            name="On WFH"
+                            name="WFH"
                             focused={focused}
                         />
                     )

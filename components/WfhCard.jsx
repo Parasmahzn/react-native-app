@@ -3,7 +3,7 @@ import { View, Text } from 'react-native';
 const WorkFromHomeCard = ({ serialNumber, leave: { userName, designation, fromDate, toDate, reason, noOfDays, shift } }) => {
 
     return (
-        <View className='flex-col items-center px-4 mb-14'>
+        <View className='flex-col items-center px-4 mb-8'>
             <View className='flex-row gap-3 items-start'>
                 <View className='justify-center items-center flex-row flex-1'>
                     <View className='w-[46px] h-[46px] rounded-full border border-secondary justify-center items-center'>
