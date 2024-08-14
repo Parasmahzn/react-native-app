@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { View, Text, FlatList, RefreshControl, Alert } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { delay, getDateTimeInfo } from '../../lib/utils';
+import { getDateTimeInfo } from '../../lib/utils';
 import { useUsers } from '../../api/users';
 import { useLeaveStatus } from '../../api/leave-status';
 
@@ -43,18 +43,12 @@ const Home = () => {
     const { userInfo } = user.data;
     const { dayName, time12Hour } = getDateTimeInfo(currentTime);
 
-    const handlePunchIn = async () => {
+    const handlePunchIn = async (event) => {
+        event.persist();
         setIsSubmitting(true);
         try {
-            await delay(2000);
-            // const punchInResp = await punchIn.mutateAsync();
-            // if (punchInResp.success) {
-            //     Alert.alert("Success", 'Punch In Successful');
-            // } else if (response.message) {
-            //     Alert.alert("Notice", response.message);
-            // } else {
-            //     Alert.alert("Error", 'Punch In failed, please try again.');
-            // }
+            // await delay(2000);
+            const punchInResp = await punchIn.mutateAsync();
             Alert.alert("Success", 'Punch In Confirmed! Have a Great Day');
         } catch (error) {
             Alert.alert("Error", error.message);
@@ -101,7 +95,7 @@ const Home = () => {
                                 title='Punch In'
                                 handlePress={handlePunchIn}
                                 containerStyles='flex-1 mx-3'
-                                isLoading={isSubmitting}
+                                isLoading={isSubmitting || userInfo.isPunchedIn}
                             />
                             <CustomButton
                                 title='Punch Out'
