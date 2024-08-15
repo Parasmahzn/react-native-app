@@ -31,13 +31,12 @@ const Profile = () => {
             console.error('Error clearing Secure Store:', error);
         }
     }
-
     const { userInfo: { designation, fullName, email, citNumber,
         ssfNumber, citizenshipNumber, role, department, reportingManager, joinedDate, shift }
     } = users.data;
 
-    const { gender, dateOfBirth, userId, imageUrl, bloodGroup,
-        panNumber, fatherName, motherName, maritalStatus
+    const { general: { gender, dateOfBirth, userId, imageUrl, bloodGroup,
+        panNumber, fatherName, motherName, maritalStatus }
     } = myProfile.data;
 
     return (
@@ -68,79 +67,74 @@ const Profile = () => {
                         {designation}
                     </Text>
                     <Text className='text-sm font-pmedium text-gray-300 mb-1'>
-                        DRM ID: {userId}
+                        {email}
                     </Text>
                     <Text className='text-sm font-pmedium text-gray-300 mb-3'>
-                        {email}
+                        DRM ID: {userId}
                     </Text>
                 </View>
             </View>
             <ScrollView className='flex-1 px-4'>
-                <View className='mb-6'>
+                <View className='mb-4'>
                     <Text className='text-xl font-psemibold text-white mb-4 text-center'>
                         Personal Details
                     </Text>
                     <View className='bg-gray-800 rounded-lg p-4'>
-                        <Text className='text-base font-pmedium text-gray-100 mb-2'>
-                            Gender: <Text className='font-normal'>{gender}</Text>
+                        <Text className='text-sm mb-2 text-white font-psemibold'>
+                            Gender: <Text className='text-xs text-gray-400'>{gender}</Text>
                         </Text>
-                        <Text className='text-base font-pmedium text-gray-100 mb-2'>
-                            Date of Birth: <Text className='font-normal'>{dateOfBirth}</Text>
+                        <Text className='text-sm mb-2 text-white font-psemibold'>
+                            Date of Birth: <Text className='text-xs text-gray-400'>{dateOfBirth}</Text>
                         </Text>
-                        <Text className='text-base font-pmedium text-gray-100 mb-2'>
-                            Blood Group: <Text className='font-normal'>{bloodGroup}</Text>
+                        <Text className='text-sm mb-2 text-white font-psemibold'>
+                            Blood Group: <Text className='text-xs text-gray-400'>{bloodGroup}</Text>
                         </Text>
-                        <Text className='text-base font-pmedium text-gray-100 mb-2'>
-                            PAN No: <Text className='font-normal'>{panNumber}</Text>
+                        <Text className='text-sm mb-2 text-white font-psemibold'>
+                            PAN No: <Text className='text-xs text-gray-400'>{panNumber}</Text>
                         </Text>
-                        <Text className='text-base font-pmedium text-gray-100 mb-2'>
-                            Father's Name: <Text className='font-normal'>{fatherName}</Text>
+                        <Text className='text-sm mb-2 text-white font-psemibold'>
+                            Father's Name: <Text className='text-xs text-gray-400'>{fatherName}</Text>
                         </Text>
-                        <Text className='text-base font-pmedium text-gray-100 mb-2'>
-                            Mother's Name: <Text className='font-normal'>{motherName}</Text>
+                        <Text className='text-sm mb-2 text-white font-psemibold'>
+                            Mother's Name: <Text className='text-xs text-gray-400'>{motherName}</Text>
                         </Text>
-                        <Text className='text-base font-pmedium text-gray-100 mb-2'>
-                            Marital Status: <Text className='font-normal'>{maritalStatus}</Text>
+                        <Text className='text-sm mb-2 text-white font-psemibold'>
+                            Marital Status: <Text className='text-xs text-gray-400'>{maritalStatus}</Text>
                         </Text>
                     </View>
                 </View>
 
                 <View>
-                    <Text className='text-xl font-psemibold text-white mb-4 text-center'>
+                    <Text className='text-lg font-psemibold text-white mb-3 text-center'>
                         Official Details
                     </Text>
-                    <View className='bg-gray-800 rounded-lg p-4'>
-                        <Text className='text-base font-pmedium text-gray-100 mb-2'>
-                            CIT No: <Text className='font-normal'>{citNumber}</Text>
+                    <View className='bg-gray-800 rounded-lg p-3'>
+                        <Text className='text-sm mb-1 text-white font-psemibold'>
+                            CIT No: <Text className='text-gray-400 text-xs'>{citNumber}</Text>
                         </Text>
-                        <Text className='text-base font-pmedium text-gray-100 mb-2'>
-                            SSF No: <Text className='font-normal'>{ssfNumber}</Text>
+                        <Text className='text-sm mb-1 text-white font-psemibold'>
+                            SSF No: <Text className='text-gray-400 text-xs'>{ssfNumber}</Text>
                         </Text>
-                        <Text className='text-base font-pmedium text-gray-100 mb-2'>
-                            Citizen Number: <Text className='font-normal'>{citizenshipNumber}</Text>
+                        <Text className='text-sm mb-1 text-white font-psemibold'>
+                            Citizen Number: <Text className='text-gray-400 text-xs'>{citizenshipNumber}</Text>
                         </Text>
-                        <Text className='text-base font-pmedium text-gray-100 mb-2'>
-                            Role: <Text className='font-normal'>{role}</Text>
+                        <Text className='text-sm mb-1 text-white font-psemibold'>
+                            Role: <Text className='text-gray-400 text-xs'>{role}</Text>
                         </Text>
-                        <Text className='text-base font-pmedium text-gray-100 mb-2'>
-                            Department: <Text className='font-normal'>{department}</Text>
+                        <Text className='text-sm mb-1 text-white font-psemibold'>
+                            Department: <Text className='text-gray-400 text-xs'>{department}</Text>
                         </Text>
-                        <Text className='text-base font-pmedium text-gray-100 mb-2'>
-                            Designation: <Text className='font-normal'>{designation}</Text>
+                        <Text className='text-sm mb-1 text-white font-psemibold'>
+                            Designation: <Text className='text-gray-400 text-xs'>{designation}</Text>
                         </Text>
-                        <Text className='text-base font-pmedium text-gray-100 mb-2'>
-                            Reporting Manager:
-                            <Text className='font-normal'>
-                                {reportingManager}
-                            </Text>
+                        <Text className='text-sm mb-1 text-white font-psemibold'>
+                            Reporting Manager: <Text className='text-gray-400 text-xs font-normal'>{reportingManager}</Text>
                         </Text>
-                        <Text className='text-base font-pmedium text-gray-100 mb-2'>
-                            Joined Date: <Text className='font-normal'>
-                                {joinedDate || new Date(joinedDate)?.toLocaleDateString()}
-                            </Text>
+                        <Text className='text-sm mb-1 text-white font-psemibold'>
+                            Joined Date: <Text className='text-gray-400 text-xs'>{new Date(joinedDate)?.toLocaleDateString() || ''}</Text>
                         </Text>
-                        <Text className='text-base font-pmedium text-gray-100 mb-2'>
-                            Working Shift: <Text className='font-normal'>{shift}</Text>
+                        <Text className='text-sm mb-1 text-white font-psemibold'>
+                            Working Shift: <Text className='text-gray-400 text-xs'>{shift}</Text>
                         </Text>
                     </View>
                 </View>

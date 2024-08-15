@@ -76,6 +76,19 @@ const TabsLayout = () => {
                     )
                 }} />
 
+                <Tabs.Screen name='punch-in-history' options={{
+                    title: 'History',
+                    headerShown: false,
+                    tabBarIcon: ({ color, focused }) => (
+                        <TabIcon
+                            icon={icons.punchInHistory}
+                            color={color}
+                            name="History"
+                            focused={focused}
+                        />
+                    )
+                }} />
+
                 <Tabs.Screen name='profile' options={{
                     title: 'Profile',
                     headerShown: false,

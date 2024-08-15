@@ -9,6 +9,9 @@ const getMyProfile = async () => {
 export const useMyProfile = () => {
     return useQuery({
         queryKey: ['myprofile'],
-        queryFn: getMyProfile
+        queryFn: getMyProfile,
+        select: (data) => {
+            return data?.profile || {}
+        }
     });
 }

@@ -31,6 +31,7 @@ const SignIn = () => {
 
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [rememberMe, setRememberMe] = useState(false);
+    const [easyCheckIn, setSetEasyCheckIn] = useState(false);
 
     useEffect(() => {
         const loadCredentials = async () => {
@@ -103,12 +104,21 @@ const SignIn = () => {
                         handleChangeText={(e) => setForm({ ...form, password: e })}
                         otherStyles='mt-7'
                     />
-                    <View className='flex-row items-center mt-7'>
-                        <Switch
-                            value={rememberMe}
-                            onValueChange={setRememberMe}
-                        />
-                        <Text className='text-white ml-3 font-pregular'>Remember Me</Text>
+                    <View className='flex-row justify-evenly mt-7'>
+                        <View className='flex-row items-center'>
+                            <Switch
+                                value={rememberMe}
+                                onValueChange={setRememberMe}
+                            />
+                            <Text className='text-white ml-2 font-pregular text-sm'>Remember Me</Text>
+                        </View>
+                        <View className='flex-row items-center'>
+                            <Switch
+                                value={easyCheckIn}
+                                onValueChange={setSetEasyCheckIn}
+                            />
+                            <Text className='text-white ml-2 font-pregular text-sm'>Easy Check-In</Text>
+                        </View>
                     </View>
                     <CustomButton
                         title='Sign In'

@@ -13,6 +13,7 @@ import eye from "../assets/icons/eye.png";
 import play from "../assets/icons/play.png";
 import wfh from "../assets/icons/wfh.png";
 import onLeave from "../assets/icons/on-leave.png";
+import punchInHistory from "../assets/icons/attendance.png";
 
 export default {
     avatar,
@@ -29,5 +30,6 @@ export default {
     eyeHide,
     eye,
     wfh,
-    onLeave
+    onLeave,
+    punchInHistory
 };
