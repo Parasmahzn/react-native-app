@@ -52,6 +52,7 @@ const Home = () => {
             // await delay(2000);
             await punchIn.mutateAsync();
             Alert.alert("Success", 'Punch In Confirmed! Have a Great Day');
+            user.refetch();
         } catch (error) {
             Alert.alert("Error", error.message);
         }
