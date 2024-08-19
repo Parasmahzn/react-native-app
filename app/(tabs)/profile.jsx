@@ -12,6 +12,7 @@ import Loader from '../../components/Loader';
 import ErrorState from '../../components/ErrorState';
 
 const Profile = () => {
+    const notAvailable = 'N/a';
     const { setUser, setIsLoggedIn } = useGlobalContext();
     const users = useUsers();
     const myProfile = useMyProfile();
@@ -81,25 +82,25 @@ const Profile = () => {
                     </Text>
                     <View className='bg-gray-800 rounded-lg p-4'>
                         <Text className='text-sm mb-2 text-white font-psemibold'>
-                            Gender: <Text className='text-xs text-gray-400'>{gender}</Text>
+                            Gender: <Text className='text-xs text-gray-400'>{gender || notAvailable}</Text>
                         </Text>
                         <Text className='text-sm mb-2 text-white font-psemibold'>
-                            Date of Birth: <Text className='text-xs text-gray-400'>{dateOfBirth}</Text>
+                            Date of Birth: <Text className='text-xs text-gray-400'>{dateOfBirth || notAvailable}</Text>
                         </Text>
                         <Text className='text-sm mb-2 text-white font-psemibold'>
-                            Blood Group: <Text className='text-xs text-gray-400'>{bloodGroup}</Text>
+                            Blood Group: <Text className='text-xs text-gray-400'>{bloodGroup || notAvailable}</Text>
                         </Text>
                         <Text className='text-sm mb-2 text-white font-psemibold'>
-                            PAN No: <Text className='text-xs text-gray-400'>{panNumber}</Text>
+                            PAN No: <Text className='text-xs text-gray-400'>{panNumber || notAvailable}</Text>
                         </Text>
                         <Text className='text-sm mb-2 text-white font-psemibold'>
-                            Father's Name: <Text className='text-xs text-gray-400'>{fatherName}</Text>
+                            Father's Name: <Text className='text-xs text-gray-400'>{fatherName || notAvailable}</Text>
                         </Text>
                         <Text className='text-sm mb-2 text-white font-psemibold'>
-                            Mother's Name: <Text className='text-xs text-gray-400'>{motherName}</Text>
+                            Mother's Name: <Text className='text-xs text-gray-400'>{motherName || notAvailable}</Text>
                         </Text>
                         <Text className='text-sm mb-2 text-white font-psemibold'>
-                            Marital Status: <Text className='text-xs text-gray-400'>{maritalStatus}</Text>
+                            Marital Status: <Text className='text-xs text-gray-400'>{maritalStatus || notAvailable}</Text>
                         </Text>
                     </View>
                 </View>
@@ -110,31 +111,31 @@ const Profile = () => {
                     </Text>
                     <View className='bg-gray-800 rounded-lg p-3'>
                         <Text className='text-sm mb-1 text-white font-psemibold'>
-                            CIT No: <Text className='text-gray-400 text-xs'>{citNumber}</Text>
+                            CIT No: <Text className='text-gray-400 text-xs'>{citNumber || notAvailable}</Text>
                         </Text>
                         <Text className='text-sm mb-1 text-white font-psemibold'>
-                            SSF No: <Text className='text-gray-400 text-xs'>{ssfNumber}</Text>
+                            SSF No: <Text className='text-gray-400 text-xs'>{ssfNumber || notAvailable}</Text>
                         </Text>
                         <Text className='text-sm mb-1 text-white font-psemibold'>
-                            Citizen Number: <Text className='text-gray-400 text-xs'>{citizenshipNumber}</Text>
+                            Citizen Number: <Text className='text-gray-400 text-xs'>{citizenshipNumber || notAvailable}</Text>
                         </Text>
                         <Text className='text-sm mb-1 text-white font-psemibold'>
-                            Role: <Text className='text-gray-400 text-xs'>{role}</Text>
+                            Role: <Text className='text-gray-400 text-xs'>{role || notAvailable}</Text>
                         </Text>
                         <Text className='text-sm mb-1 text-white font-psemibold'>
-                            Department: <Text className='text-gray-400 text-xs'>{department}</Text>
+                            Department: <Text className='text-gray-400 text-xs'>{department || notAvailable}</Text>
                         </Text>
                         <Text className='text-sm mb-1 text-white font-psemibold'>
-                            Designation: <Text className='text-gray-400 text-xs'>{designation}</Text>
+                            Designation: <Text className='text-gray-400 text-xs'>{designation || notAvailable}</Text>
                         </Text>
                         <Text className='text-sm mb-1 text-white font-psemibold'>
-                            Reporting Manager: <Text className='text-gray-400 text-xs font-normal'>{reportingManager}</Text>
+                            Reporting Manager: <Text className='text-gray-400 text-xs font-normal'>{reportingManager || notAvailable}</Text>
                         </Text>
                         <Text className='text-sm mb-1 text-white font-psemibold'>
-                            Joined Date: <Text className='text-gray-400 text-xs'>{new Date(joinedDate)?.toLocaleDateString() || ''}</Text>
+                            Joined Date: <Text className='text-gray-400 text-xs'>{new Date(joinedDate)?.toLocaleDateString() || notAvailable}</Text>
                         </Text>
                         <Text className='text-sm mb-1 text-white font-psemibold'>
-                            Working Shift: <Text className='text-gray-400 text-xs'>{shift}</Text>
+                            Working Shift: <Text className='text-gray-400 text-xs'>{shift || notAvailable}</Text>
                         </Text>
                     </View>
                 </View>

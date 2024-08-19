@@ -1,10 +1,9 @@
 import { useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 
-const WorkFromHomeCard = ({ serialNumber, leave: { userName, designation, fromDate, toDate, reason, noOfDays, shift } }) => {
+const EmployeeCard = ({ serialNumber, employee: { fullName, email, designation, contactNumber } }) => {
 
     const [isExpanded, setIsExpanded] = useState(false);
-
     return (
         <View className='px-4 mb-1'>
             <TouchableOpacity
@@ -19,28 +18,20 @@ const WorkFromHomeCard = ({ serialNumber, leave: { userName, designation, fromDa
                     </View>
                     <View className='ml-3 flex-1'>
                         <Text className='text-white font-psemibold text-lg' numberOfLines={1}>
-                            {userName}
+                            {fullName}
                         </Text>
                     </View>
                 </View>
-
-                {/* Conditionally render the additional details */}
                 {isExpanded && (
                     <View className='mt-2 mx-6'>
                         <Text className='text-gray-400 text-sm'>
-                            Designation: {designation}
+                            Email: {email}
                         </Text>
                         <Text className='text-gray-400 text-sm'>
-                            Reason: {reason}
+                            Designation: {designation?.name}
                         </Text>
                         <Text className='text-gray-400 text-sm'>
-                            From: {new Date(fromDate).toLocaleDateString()}
-                        </Text>
-                        <Text className='text-gray-400 text-sm'>
-                            To: {new Date(toDate).toLocaleDateString()}
-                        </Text>
-                        <Text className='text-gray-400 text-sm'>
-                            Total Days: {noOfDays} {shift}
+                            Contact: {contactNumber}
                         </Text>
                     </View>
                 )}
@@ -49,4 +40,4 @@ const WorkFromHomeCard = ({ serialNumber, leave: { userName, designation, fromDa
     );
 };
 
-export default WorkFromHomeCard;
+export default EmployeeCard;

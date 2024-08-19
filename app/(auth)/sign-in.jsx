@@ -21,9 +21,6 @@ const SignIn = () => {
 
     const { mutateAsync: login, isLoading, error, isError } = useLogin();
 
-    if (isLoading) return <Loader />;
-    if (isError) return <ErrorState message={error.message} />;
-
     const [form, setForm] = useState({
         email: '',
         password: ''
@@ -78,6 +75,9 @@ const SignIn = () => {
             setIsSubmitting(false);
         }
     }
+
+    if (isLoading) return <Loader />;
+    if (isError) return <ErrorState message={error.message} />;
 
     return (
         <SafeAreaView className='bg-primary h-full'>

@@ -11,8 +11,7 @@ import logout from "../assets/icons/logout.png";
 import eyeHide from "../assets/icons/eye-hide.png";
 import eye from "../assets/icons/eye.png";
 import play from "../assets/icons/play.png";
-import wfh from "../assets/icons/wfh.png";
-import onLeave from "../assets/icons/on-leave.png";
+import employees from "../assets/icons/employees.png";
 import punchInHistory from "../assets/icons/attendance.png";
 
 export default {
@@ -29,7 +28,6 @@ export default {
     logout,
     eyeHide,
     eye,
-    wfh,
-    onLeave,
+    employees,
     punchInHistory
 };

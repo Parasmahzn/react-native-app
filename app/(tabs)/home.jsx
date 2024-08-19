@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { View, Text, FlatList, RefreshControl, Alert } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { getDateTimeInfo } from '../../lib/utils';
 import { useUsers } from '../../api/users';
 import { useLeaveStatus } from '../../api/leave-status';
 import { usePunchIn } from '../../api/punch-in';
 import { usePunchOut } from '../../api/punch-out';
 
 import useRefresh from '../../hooks/useRefresh';
+import { getDayName, getTime12Hour } from '../../lib/dateUtils';
 
 import LeaveCard from '../../components/LeaveCard';
 import EmptyState from '../../components/EmptyState';
@@ -43,7 +43,8 @@ const Home = () => {
         return <ErrorState message={user.error.message || leaveStatus.error.message || punchIn.error.message || punchOut.error.message} />
 
     const { userInfo } = user.data;
-    const { dayName, time12Hour } = getDateTimeInfo(currentTime);
+    const dayName = getDayName(currentTime);
+    const time12Hour = getTime12Hour(currentTime);
 
     const handlePunchIn = async (event) => {
         event.persist();

@@ -8,6 +8,7 @@ const signIn = async (loginData) => {
         await SecureStore.setItemAsync('userEmail', loginData?.email);
         return response.data;
     } catch (error) {
+        console.error(error);
         // Forward the error message to the React Query hook
         if (error.response && error.response.data) {
             throw new Error(error.response.data.message || 'An error occurred');

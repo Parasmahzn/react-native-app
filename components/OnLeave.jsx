@@ -1,14 +1,14 @@
-import { View, FlatList, Text, RefreshControl } from 'react-native'
+import { View, FlatList, RefreshControl } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useOnLeave } from '../../api/on-leave';
-import { useAllUsers } from '../../api/users';
-import useRefresh from '../../hooks/useRefresh';
+import { useOnLeave } from '../api/on-leave';
+import { useAllUsers } from '../api/users';
+import useRefresh from '../hooks/useRefresh';
 
-import Loader from '../../components/Loader';
-import WorkFromHomeCard from '../../components/WfhCard';
-import InfoBox from '../../components/InfoBox';
-import EmptyState from '../../components/EmptyState';
-import ErrorState from '../../components/ErrorState';
+import Loader from './Loader';
+import WorkFromHomeCard from './WfhCard';
+import InfoBox from './InfoBox';
+import EmptyState from './EmptyState';
+import ErrorState from './ErrorState';
 
 const OnLeave = () => {
     const onLeaveUsers = useOnLeave();
@@ -31,10 +31,7 @@ const OnLeave = () => {
     const totalEmployeeCount = allUsers?.data?.total_data || 0;
 
     return (
-        <SafeAreaView className='bg-primary  h-full'>
-            <Text className='text-2xl text-white text-center font-psemibold px-4 my-4'>
-                Employees on Leave
-            </Text>
+        <SafeAreaView className='bg-primary h-full'>
             <FlatList
                 data={onLeaveList}
                 keyExtractor={(item) => item.id}
@@ -43,8 +40,8 @@ const OnLeave = () => {
                         serialNumber={index + 1} />
                 )}
                 ListHeaderComponent={() => (
-                    <View className='w-full justify-center items-center mt-6 mb-8 px-4'>
-                        <View className='mt-2 flex-row'>
+                    <View className='w-full justify-center items-center mb-4 px-4'>
+                        <View className='mt-0 flex-row'>
                             <InfoBox
                                 title={totalOnLeaveCount}
                                 subtitle='Leave'
@@ -72,6 +69,8 @@ const OnLeave = () => {
                         refreshing={refreshing}
                         onRefresh={onRefresh}
                     />}
+
+                ListFooterComponent={<View className='h-[95px]' />}
             />
         </SafeAreaView>
     )

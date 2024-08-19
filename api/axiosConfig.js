@@ -3,13 +3,12 @@ import * as SecureStore from 'expo-secure-store';
 
 // Create an Axios instance with custom configuration
 const api = axios.create({
-    baseURL: 'https://api-drm.deerhold.org/api/v1',
+    baseURL: process.env.EXPO_PUBLIC_ENDPOINT,
     timeout: 10000,  // Set a timeout for requests (in milliseconds)
     headers: {
         'Content-Type': 'application/json',
     },
 });
-
 
 api.interceptors.request.use(
     async config => {
