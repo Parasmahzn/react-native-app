@@ -1,6 +1,5 @@
 import { FlatList, RefreshControl, ScrollView, Text } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { DataTable } from 'react-native-paper';
 import { usePunchInHistory } from '../../api/punch-in-history';
 
 import EmptyState from '../../components/EmptyState'
