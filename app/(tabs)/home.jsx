@@ -7,7 +7,7 @@ import { usePunchIn } from '../../api/punch-in';
 import { usePunchOut } from '../../api/punch-out';
 
 import useRefresh from '../../hooks/useRefresh';
-import { getDayName, getTime12Hour } from '../../lib/dateUtils';
+import { getDayName, getTime12Hour, isWeekend } from '../../lib/dateUtils';
 
 import LeaveCard from '../../components/LeaveCard';
 import EmptyState from '../../components/EmptyState';
@@ -45,6 +45,8 @@ const Home = () => {
     const { userInfo } = user.data;
     const dayName = getDayName(currentTime);
     const time12Hour = getTime12Hour(currentTime);
+
+    const isWeekend = isWeekend(currentTime);
 
     const handlePunchIn = async (event) => {
         event.persist();
@@ -111,7 +113,7 @@ const Home = () => {
                                 title='Punch In'
                                 handlePress={handlePunchIn}
                                 containerStyles='flex-1 mx-3'
-                                isLoading={isSubmitting || userInfo.isPunchedIn}
+                                isLoading={isSubmitting || userInfo.isPunchedIn || isWeekend}
                             />
                             <CustomButton
                                 title='Punch Out'

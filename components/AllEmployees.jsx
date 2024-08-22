@@ -23,14 +23,21 @@ const AllEmployees = () => {
     if (searchEmployees.isError || allUsers.isError)
         return <ErrorState message={searchEmployees.error.message || allUsers.error.message} />
 
-    const { data: searchEmployeesData } = searchEmployees;
-    const employeeList = searchEmployeesData?.data || [];
+    const { pages = [] } = searchEmployees?.data || {};
+    const employeeList = pages.flatMap(page => page.data);
     const totalEmployeeCount = allUsers?.data?.total_data || 0;
+
+    const loadMoreData = () => {
+        if (searchEmployees.hasNextPage) {
+            searchEmployees.fetchNextPage();
+        }
+    };
+
     return (
         <SafeAreaView className='bg-primary h-full'>
             <FlatList
                 data={employeeList}
-                keyExtractor={(item) => item.id}
+                keyExtractor={(item, index) => `${item.id}-${index}`}
                 renderItem={({ item, index }) => (
                     <EmployeeCard employee={item}
                         serialNumber={index + 1} />
@@ -60,7 +67,9 @@ const AllEmployees = () => {
                         onRefresh={onRefresh}
                     />}
 
-                ListFooterComponent={<View className='h-[95px]' />}
+                onEndReached={loadMoreData}
+                onEndReachedThreshold={0.5} // Load more when half the list is scrolled
+                ListFooterComponent={searchEmployees.hasNextPage && <Loader />}
             />
         </SafeAreaView>
     )

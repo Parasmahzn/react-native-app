@@ -12,7 +12,7 @@ import Loader from '../../components/Loader';
 import ErrorState from '../../components/ErrorState';
 
 const Profile = () => {
-    const notAvailable = 'N/a';
+    const notAvailable = 'N/A';
     const { setUser, setIsLoggedIn } = useGlobalContext();
     const users = useUsers();
     const myProfile = useMyProfile();

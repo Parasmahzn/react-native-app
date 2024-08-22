@@ -29,10 +29,10 @@ const getPunchInDetails = async ({ pageParam, startDate, endDate }) => {
  * @param {string} [endDate] - The end date for filtering.
  * @returns {Object} The query result object from useInfiniteQuery.
  */
-export const usePunchInHistory = (startDate, endDate, pageParam = 1) => {
+export const usePunchInHistory = (startDate, endDate) => {
     return useInfiniteQuery({
         queryKey: ['punchInHistory', startDate, endDate],
-        queryFn: () => getPunchInDetails({ pageParam, startDate, endDate }),
+        queryFn: ({ pageParam = 1 }) => getPunchInDetails({ pageParam, startDate, endDate }),
         getNextPageParam: (lastPage) => {
             // Determine the next page to fetch based on the response
             return lastPage.page < lastPage.totalPages ? lastPage.page + 1 : undefined;

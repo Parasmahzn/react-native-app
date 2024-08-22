@@ -11,7 +11,7 @@ const EmployeeCard = ({ serialNumber, employee: { fullName, email, designation, 
                 className={`bg-gray-800 rounded-lg p-4 ${isExpanded ? 'border-2 border-yellow-500' : 'border-transparent'}`}
             >
                 <View className='flex-row items-center'>
-                    <View className='w-[30px] h-[30px] rounded-full border border-secondary justify-center items-center'>
+                    <View className='w-[35px] h-[35px] rounded-full border border-secondary justify-center items-center'>
                         <Text className='text-white font-psemibold text-xl'>
                             {serialNumber}
                         </Text>
