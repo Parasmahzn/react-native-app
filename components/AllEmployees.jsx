@@ -4,28 +4,25 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import InfoBox from './InfoBox'
 import EmptyState from './EmptyState'
 import { useSearchEmployees } from '../api/search-employees'
-import { useAllUsers } from '../api/users'
 import useRefresh from '../hooks/useRefresh'
 import Loader from './Loader'
 import ErrorState from './ErrorState'
 
 const AllEmployees = () => {
     const searchEmployees = useSearchEmployees();
-    const allUsers = useAllUsers();
 
     const { refreshing, onRefresh } = useRefresh([
-        searchEmployees.refetch,
-        allUsers.refetch,
+        searchEmployees.refetch
     ]);
 
-    if (searchEmployees.isLoading || allUsers.isLoading)
+    if (searchEmployees.isLoading)
         return <Loader />
-    if (searchEmployees.isError || allUsers.isError)
-        return <ErrorState message={searchEmployees.error.message || allUsers.error.message} />
+    if (searchEmployees.isError)
+        return <ErrorState message={searchEmployees.error.message} />
 
     const { pages = [] } = searchEmployees?.data || {};
     const employeeList = pages.flatMap(page => page.data);
-    const totalEmployeeCount = allUsers?.data?.total_data || 0;
+    const { totalData: totalEmployeeCount } = pages[0] || {};
 
     const loadMoreData = () => {
         if (searchEmployees.hasNextPage) {
@@ -69,7 +66,7 @@ const AllEmployees = () => {
 
                 onEndReached={loadMoreData}
                 onEndReachedThreshold={0.5} // Load more when half the list is scrolled
-                ListFooterComponent={searchEmployees.hasNextPage && <Loader />}
+                ListFooterComponent={<View className='h-[95px]' />}
             />
         </SafeAreaView>
     )

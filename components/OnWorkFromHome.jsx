@@ -1,6 +1,5 @@
 import { View, FlatList, RefreshControl } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useAllUsers } from '../api/users';
 import { useWorkFromHome } from '../api/on-wfh'
 
 import useRefresh from '../hooks/useRefresh';
@@ -13,21 +12,18 @@ import WorkFromHomeCard from './WfhCard';
 
 const OnWorkFromHome = () => {
     const wfhUsers = useWorkFromHome();
-    const allUsers = useAllUsers();
 
     const { refreshing, onRefresh } = useRefresh([
-        wfhUsers.refetch,
-        allUsers.refetch,
+        wfhUsers.refetch
     ]);
 
-    if (wfhUsers.isLoading || allUsers.isLoading)
+    if (wfhUsers.isLoading)
         return <Loader />
-    if (wfhUsers.isError || allUsers.isError)
-        return <ErrorState message={wfhUsers.error.message || allUsers.error.message} />
+    if (wfhUsers.isError)
+        return <ErrorState message={wfhUsers.error.message} />
 
     const wfhList = wfhUsers?.data[0] || [];
     const totalWfhCount = wfhUsers?.data[1] || 0;
-    const totalEmployeeCount = allUsers?.data?.total_data || 0;
 
     return (
         <SafeAreaView className='bg-primary h-full'>
@@ -43,16 +39,9 @@ const OnWorkFromHome = () => {
                         <View className='mt-0 flex-row'>
                             <InfoBox
                                 title={totalWfhCount}
-                                subtitle="WFH"
-                                containerStyles='mr-10'
+                                subtitle="Total"
                                 titleStyles='text-xl'
                             />
-                            <InfoBox
-                                title={totalEmployeeCount}
-                                subtitle='Total'
-                                titleStyles='text-xl'
-                            />
-
                         </View>
                     </View>
                 )}

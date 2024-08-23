@@ -46,7 +46,7 @@ const Home = () => {
     const dayName = getDayName(currentTime);
     const time12Hour = getTime12Hour(currentTime);
 
-    const isWeekend = isWeekend(currentTime);
+    const isHoliday = isWeekend(currentTime);
 
     const handlePunchIn = async (event) => {
         event.persist();
@@ -113,7 +113,7 @@ const Home = () => {
                                 title='Punch In'
                                 handlePress={handlePunchIn}
                                 containerStyles='flex-1 mx-3'
-                                isLoading={isSubmitting || userInfo.isPunchedIn || isWeekend}
+                                isLoading={isSubmitting || userInfo.isPunchedIn || isHoliday}
                             />
                             <CustomButton
                                 title='Punch Out'

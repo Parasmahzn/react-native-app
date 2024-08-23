@@ -7,7 +7,8 @@ const api = axios.create({
     timeout: 10000,  // Set a timeout for requests (in milliseconds)
     headers: {
         'Content-Type': 'application/json',
-        'User-Agent': 'Mozilla/5.0 (Linux; Android 12; M2003J15SC) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Mobile Safari/537.36'
+        // 'User-Agent': 'Mozilla/5.0 (Linux; Android 12; M2003J15SC) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Mobile Safari/537.36',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36',
     },
 });
 
